@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import "dotenv/config";
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, useAccount, WagmiConfig } from "wagmi";
@@ -35,12 +36,13 @@ const { chains, provider } = configureChains(
   ],
   [alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }), publicProvider()]
 );
-const projectId = process.env.WALLET_CONNECT_PROJECT_ID;
+
 const { connectors } = getDefaultWallets({
   appName: "My Alchemy DApp",
-  projectId,
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
   chains,
 });
+// console.log("...", process.env);
 
 const wagmiClient = createClient({
   autoConnect: true,
